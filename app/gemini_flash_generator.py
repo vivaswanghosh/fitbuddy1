@@ -3,11 +3,12 @@ import os
 from google.genai import errors
 
 from .gemini_generator import _get_client
-from .nutrition import get_tip
+
 
 
 def _get_flash_model() -> str:
-    return os.getenv("GEMINI_FLASH_MODEL", "gemini-1.5-flash-002")
+    return os.getenv("GEMINI_FLASH_MODEL")
+
 
 
 def generate_nutrition_tip_with_flash(goal: str) -> str:
@@ -21,6 +22,6 @@ def generate_nutrition_tip_with_flash(goal: str) -> str:
             model=_get_flash_model(),
             contents=prompt,
         )
-        return response.text.strip() if getattr(response, "text", None) else get_tip(goal)
+        return response.text.strip() if getattr(response, "text", None) else ""
     except (errors.ClientError, errors.ServerError):
-        return get_tip(goal)
+        return "Error: Unable to generate nutrition tip at this time."
