@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your FitBuddy Plan</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="bg-orbit"></div>
+  <main class="plan-page">
+    <header class="plan-header">
+      <h1>Your 7-day plan</h1>
+      <p class="plan-meta">Goal: {{ plan["goal"] }} | Intensity: {{ plan["intensity"] }}</p>
+    </header>
+
+    <section class="tip-card">
+      <h2>Tip</h2>
+      <p>{{ tip }}</p>
+    </section>
+
+    <section class="plan-grid">
+      {% for day in plan["days"] %}
+      <article class="day-card">
+        <h3>{{ day["day"] }}</h3>
+        <p class="focus">{{ day["focus"] }} · {{ day["duration_minutes"] }} min</p>
+        <ul>
+          {% for ex in day["exercises"] %}
+          <li>
+            <span class="ex-name">{{ ex["name"] }}</span>
+            <span class="ex-meta">
+              {% if ex.get("sets") %}{{ ex["sets"] }} sets{% endif %}
+              {% if ex.get("reps") %} · {{ ex["reps"] }} reps{% endif %}
+              {% if ex.get("duration_minutes") %} · {{ ex["duration_minutes"] }} min{% endif %}
+            </span>
+            {% if ex.get("notes") %}
+              <div class="ex-notes">{{ ex["notes"] }}</div>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </article>
+      {% endfor %}
+    </section>
+
+    <section class="feedback">
+      <h2>Refine this plan</h2>
+      <form method="post" action="/ui/feedback">
+        <input type="hidden" name="plan_id" value="{{ plan_id }}" />
+        <textarea name="feedback" rows="3" placeholder="e.g., add more cardio on Day 2" required></textarea>
+        <button type="submit">Update plan</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

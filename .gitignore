@@ -1,0 +1,44 @@
+# Byte-code files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+
+# Virtual environments
+.venv/
+env/
+venv/
+env3.*
+site/
+
+# Editor/IDE-specific files
+.idea/  # JetBrains IDEs (PyCharm, etc)
+.vscode/ # VS Code
+*.swp   # vim temporary files
+.*.sw?
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Test and coverage files
+.pytest_cache/
+.coverage*
+htmlcov/
+coverage.xml
+
+# Operating System files
+.DS_Store # macOS
+
+# Sensitive files and logs (secrets, databases, etc)
+.env
+*.log
+log.txt
+test.db
+*.sqlite
+*.sqlite3
+*.db
+
+# Specific temporary files
+temp.py

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FitBuddy – AI Fitness Plan Generator</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="bg-orbit"></div>
+  <header class="hero">
+    <div class="hero-left">
+      <p class="eyebrow">FitBuddy</p>
+      <h1>AI fitness plans tuned to your goal and energy.</h1>
+      <p class="subhead">
+        Generate a 7-day plan with smart structure, intensity balance, and a recovery tip.
+      </p>
+      <div class="hero-badges">
+        <span>FastAPI</span>
+        <span>Gemini AI</span>
+        <span>SQLite</span>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h2>Build my plan</h2>
+      <form class="plan-form" method="post" action="/ui/generate">
+        <label>
+          Name
+          <input type="text" name="name" placeholder="Alex" required />
+        </label>
+        <label>
+          Age
+          <input type="number" name="age" min="13" max="90" placeholder="24" required />
+        </label>
+        <label>
+          Weight (kg)
+          <input type="number" name="weight" min="30" max="300" placeholder="68" required />
+        </label>
+        <label>
+          Goal
+          <select name="goal" required>
+            <option value="weight loss">Weight loss</option>
+            <option value="muscle gain">Muscle gain</option>
+            <option value="general wellness">General wellness</option>
+          </select>
+        </label>
+        <label>
+          Intensity
+          <select name="intensity" required>
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+        </label>
+        <button type="submit">Generate 7-day plan</button>
+      </form>
+    </div>
+  </header>
+
+  <section class="info">
+    <div>
+      <h3>What you get</h3>
+      <ul>
+        <li>Day-by-day schedule tailored to your goal and intensity.</li>
+        <li>Clear exercise focus so you know what to do each day.</li>
+        <li>Nutrition or recovery tip aligned with your plan.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Feedback loop</h3>
+      <p>
+        Submit feedback like "more cardio" or "add rest days" to regenerate a plan that
+        keeps up with your progress.
+      </p>
+    </div>
+  </section>
+</body>
+</html>
