@@ -18,23 +18,6 @@ FitBuddy is a FastAPI web app that uses Google Gemini models to create a persona
 - Google Gemini (google-genai)
 - Jinja2 templates
 
-## Project Structure
-
-- app/: application package
-- app/gemini_generator.py: workout plan generation (Gemini 1.5 Pro, plain-text prompt)
-- app/gemini_flash_generator.py: nutrition tip generation (Gemini Flash)
-- app/crud.py: database helper functions
-- app/database.py: SQLAlchemy engine, session, and Base
-- app/main.py: app startup and router wiring
-- app/models.py: ORM models (User, Plan, Feedback)
-- app/routes.py: all API and UI routes
-- app/updated_plan.py: feedback-based plan updater
-- app/nutrition.py: goal-based tips
-- app/schemas.py: Pydantic request and response models
-- app/templates/: HTML templates (index.html, plan.html, result.html, all_users.html)
-- app/static/: CSS styles
-- requirements.txt: dependencies
-
 ## Setup
 
 1) Create and activate a virtual environment.
@@ -115,10 +98,6 @@ GET /plans/{plan_id}
 
 GET /users/{user_id}
 
-### Get Tip
-
-GET /tips?goal=muscle%20gain
-
 ## UI Routes
 
 - GET /: main form page
@@ -129,18 +108,9 @@ GET /tips?goal=muscle%20gain
 ## Notes
 
 - Plans are stored as plain text in SQLite and returned as formatted text.
-- Gemini output is plain text (not JSON). If anything fails, a safe fallback plan is used.
 - You can change the model via `GEMINI_MODEL` and `GEMINI_FLASH_MODEL` in .env if your account supports different models.
 - You can adjust prompts in app/gemini_generator.py and app/updated_plan.py.
-- Flash tips are controlled in app/gemini_flash_generator.py.
 
-## Common Issues
 
-- GEMINI_API_KEY missing: set it in .env or your environment.
-- Form data error: install python-multipart with `pip install python-multipart`.
-- Gemini returns empty output: the app falls back to a default plan.
-- SQLite database file is created automatically as fitbuddy.db.
 
-## License
 
-This project is for educational use in the Smart Bridge course.
