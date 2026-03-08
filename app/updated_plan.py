@@ -1,8 +1,6 @@
-from typing import Dict
-
 from google.genai import errors
 
-from .gemini_generator import _get_client, _get_model_name
+from .gemini_generator import _get_client, _get_model_name, format_gemini_error
 
 
 
@@ -22,5 +20,8 @@ def update_workout_plan(
             contents=prompt,
         )
         return response.text.strip() if getattr(response, "text", None) else current_plan
-    except (errors.ClientError, errors.ServerError):
+    except (errors.ClientError, errors.ServerError) as exc:
+        formatted_error = format_gemini_error(exc)
+        if "quota is not enabled" in formatted_error.lower():
+            return formatted_error
         return current_plan

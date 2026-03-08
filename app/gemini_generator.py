@@ -1,5 +1,4 @@
 import os
-from typing import Dict
 
 from dotenv import load_dotenv
 from google import genai
@@ -14,7 +13,20 @@ def _get_client() -> genai.Client:
 
 
 def _get_model_name() -> str:
-    return os.getenv("GEMINI_MODEL")
+    return os.getenv("GEMINI_MODEL", "models/gemini-2.0-flash")
+
+
+def format_gemini_error(exc: Exception) -> str:
+    message = str(exc)
+    if "RESOURCE_EXHAUSTED" in message or "429" in message:
+        if "limit: 0" in message:
+            return (
+                "Error: Gemini quota is not enabled for this API key/project "
+                "(reported limit is 0). Enable billing or switch to a project/key "
+                "with active Gemini quota."
+            )
+        return "Error: Gemini rate limit hit. Please retry in a few seconds."
+    return f"Error: {message}"
 
 
 def generate_workout_gemini(
@@ -50,4 +62,4 @@ User details: name={name}, age={age}, weight={weight}.
             return "Error: Gemini returned an empty response."
         return text
     except (errors.ClientError, errors.ServerError) as exc:
-        return f"Error: {exc}"
+        return format_gemini_error(exc)
